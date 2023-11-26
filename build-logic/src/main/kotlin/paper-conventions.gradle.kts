@@ -49,7 +49,7 @@ hangarPublish {
             }
         }
         pages {
-            resourcePage(provider { file("README.md").readText() })
+            resourcePage(provider { rootProject.file("README.md").readText() })
         }
     }
 }

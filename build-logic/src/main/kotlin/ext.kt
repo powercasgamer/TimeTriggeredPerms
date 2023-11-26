@@ -47,9 +47,6 @@ fun Project.applyJarMetadata(moduleName: String) {
             val indraGit = project.extensions.findByType<IndraGitExtension>()
             indraGit?.apply {
                 applyVcsInformationToManifest(manifest)
-
-                if (isPresent) {
-                }
             }
         }
     }
