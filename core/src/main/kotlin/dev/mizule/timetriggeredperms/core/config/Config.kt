@@ -25,18 +25,29 @@
 package dev.mizule.timetriggeredperms.core.config
 
 import org.spongepowered.configurate.objectmapping.ConfigSerializable
+import org.spongepowered.configurate.objectmapping.meta.Comment
 import org.spongepowered.configurate.objectmapping.meta.Setting
 
 @ConfigSerializable
 data class Config(
 
     @Setting(nodeFromParent = true)
-    val permissions: Map<String, PermissionThing> = mapOf("example" to PermissionThing("test.permission", listOf("broadcast example"))),
+    val permissions: Map<String, PermissionThing> = mapOf("example" to PermissionThing("test.permission", listOf("say example"))),
 
 )
 
 @ConfigSerializable
 data class PermissionThing(
+
+    @Comment("The permission to check for. Has to be an exact match")
     val permission: String,
+
+    @Comment(
+        "The commands to execute when a permission expires.\n" +
+            "Available placeholders are:\n" +
+            "%name% - the group or player name\n" +
+            "%uuid% - the player's uuid or empty if it's a group\n" +
+            "%permission% - the permission that got removed",
+    )
     val commands: List<String>,
 )
