@@ -1,5 +1,3 @@
-# imagery
+# TimeTriggeredPerms
 
-A WIP ShareX file server.
-
-Overcomplicating? Never heard of her.
+A plugin that will execute commands when a configured permission expires
