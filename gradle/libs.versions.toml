@@ -12,6 +12,7 @@ idea-gradle = { module = "gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gra
 gremlin-gradle = { module = "xyz.jpenilla:gremlin-gradle", version.ref = "gremlin" }
 gremlin-runtime = { module = "xyz.jpenilla:gremlin-runtime", version.ref = "gremlin" }
 run-task = { module = "xyz.jpenilla:run-task", version.ref = "run-task" }
+hangar-publish = { module = "io.papermc:hangar-publish-plugin", version.ref = "hangar-publish" }
 
 [plugins]
 gremlin-gradle = { id = "xyz.jpenilla.gremlin-gradle", version.ref = "gremlin" }
@@ -24,3 +25,4 @@ kotlin = "1.9.21"
 gremlin = "0.0.3"
 idea-gradle = "1.1.7"
 run-task = "2.2.2"
+hangar-publish = "0.1.0"

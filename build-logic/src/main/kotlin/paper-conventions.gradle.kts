@@ -1,10 +1,10 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import io.papermc.hangarpublishplugin.model.Platforms
 
 plugins {
     id("common-conventions")
-//    id("io.papermc.paperweight.userdev")
     id("xyz.jpenilla.run-paper")
     id("xyz.jpenilla.gremlin-gradle")
+    id("io.papermc.hangar-publish-plugin")
 }
 
 tasks {
@@ -14,7 +14,7 @@ tasks {
         jvmArguments.add("-Dcom.mojang.eula.agree=true")
         systemProperty("terminal.jline", false)
         systemProperty("terminal.ansi", true)
-        args( "-p", "25519")
+        args("-p", "25519")
 
         downloadPlugins {
             url("https://github.com/MiniPlaceholders/MiniPlaceholders/releases/download/2.2.1/MiniPlaceholders-Paper-2.2.1.jar")
@@ -28,40 +28,28 @@ tasks {
 
 
     shadowJar {
-//        dependencies {
-//            exclude(dependency(libs.adventure.api.get()))
-//            exclude(dependency(libs.adventure.legacy.get()))
-//            exclude(dependency(libs.adventure.key.get()))
-//            exclude(dependency(libs.adventure.plain.get()))
-//            include(dependency(libs.gremlin.gradle.get().toString()))
-//            include(dependency(libs.gremlin.runtime.get().toString()))
-//        }
         relocate("xyz.jpenilla.gremlin", "dev.mizule.timetriggeredperms.lib.xyz.jpenilla.gremlin")
     }
-
-//    writeDependencies {
-//        repos.set(listOf(
-//            "https://repo.papermc.io/repository/maven-public/",
-//            "https://repo.broccol.ai/releases",
-//            "https://maven.mizule.dev/",
-//            "https://oss.sonatype.org/content/repositories/snapshots/",
-//            "https://s01.oss.sonatype.org/content/repositories/snapshots/",
-//            "https://repo.jpenilla.xyz/snapshots/",
-//            "https://repo.jpenilla.xyz/releases/",
-//            "https://jitpack.io"
-//        ))
-//    }
 }
 
-//configurations.runtimeDownload {
-//    exclude("io.papermc.paper")
-//    exclude("net.kyori", "adventure-api")
-//    exclude("net.kyori", "adventure-text-minimessage")
-//    exclude("net.kyori", "adventure-text-serializer-plain")
-//    exclude("org.slf4j", "slf4j-api")
-//    exclude("org.ow2.asm")
-//}
-//
-//configurations.paperweightDevelopmentBundle {
-//    resolutionStrategy.cacheChangingModulesFor(3, "days")
-//}
+hangarPublish {
+    publications.register("plugin") {
+        version.set(project.version as String)
+        id.set("TimeTriggeredPerms")
+        channel.set(if (rootProject.versionString().endsWith("-SNAPSHOT")) "Beta" else "Release")
+        platforms {
+            register(Platforms.PAPER) {
+                jar.set(tasks.shadowJar.flatMap { it.archiveFile })
+                platformVersions.set(listOf("1.20", "1.19"))
+                dependencies {
+                    url("LuckPerms", "https://luckperms.net") {
+                        required.set(true)
+                    }
+                }
+            }
+        }
+        pages {
+            resourcePage(provider { file("README.md").readText() })
+        }
+    }
+}

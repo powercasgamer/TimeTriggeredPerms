@@ -19,6 +19,7 @@ dependencies {
     implementation(libs.gremlin.gradle)
     implementation(libs.run.task)
     implementation(libs.blossom)
+    implementation(libs.hangar.publish)
 }
 
 java {
