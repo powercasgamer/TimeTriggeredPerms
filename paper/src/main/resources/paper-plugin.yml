@@ -1,0 +1,13 @@
+name: TimeTriggeredPerms
+version: ${pluginVersion}
+main: dev.mizule.timetriggeredperms.paper.TTP
+description: ${pluginDescription}
+api-version: "1.20"
+loader: dev.mizule.timetriggeredperms.lib.xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
+author: ${pluginAuthor}
+
+dependencies:
+  server:
+    LuckPerms:
+      load: AFTER
+      required: true

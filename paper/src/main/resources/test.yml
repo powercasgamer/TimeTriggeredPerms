@@ -1,0 +1,4 @@
+something:
+  permission: "permission"
+  commands:
+    - "commands to execute"
