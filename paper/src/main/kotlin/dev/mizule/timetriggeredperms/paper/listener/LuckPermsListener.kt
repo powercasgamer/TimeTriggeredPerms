@@ -24,21 +24,19 @@
  */
 package dev.mizule.timetriggeredperms.paper.listener
 
+import dev.mizule.timetriggeredperms.core.TTPPlugin
 import dev.mizule.timetriggeredperms.core.config.PermissionThing
-import dev.mizule.timetriggeredperms.paper.TTP
+import dev.mizule.timetriggeredperms.core.listener.AbstractLuckPermsListener
 import net.luckperms.api.event.node.NodeRemoveEvent
 import net.luckperms.api.model.user.User
 import net.luckperms.api.node.types.PermissionNode
 import org.bukkit.Bukkit
+import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitTask
 
-class LuckPermsListener(val plugin: TTP) {
+class LuckPermsListener(private val plugin: TTPPlugin<JavaPlugin>) : AbstractLuckPermsListener(plugin) {
 
-    fun onExpire(event: NodeRemoveEvent) {
-        val node = event.node
-
-        if (!node.hasExpired()) return
-
+    override fun onExpire(event: NodeRemoveEvent) {
         val permissionNode = event.node as PermissionNode
 
         val configNode = nodeConfig(permissionNode.permission)
@@ -59,10 +57,10 @@ class LuckPermsListener(val plugin: TTP) {
     }
 
     fun nodeConfig(perm: String): PermissionThing {
-        return plugin.config.permissions.values.first { it.permission == perm }
+        return plugin.config().permissions.values.first { it.permission == perm }
     }
 
     fun sync(task: (BukkitTask) -> Unit) {
-        Bukkit.getScheduler().runTask(plugin, task)
+        Bukkit.getScheduler().runTask(plugin.plugin(), task)
     }
 }

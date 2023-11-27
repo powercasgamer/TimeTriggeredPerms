@@ -103,6 +103,17 @@ tasks {
     withType<ProcessResources>().configureEach {
         filteringCharset = "UTF-8"
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+        val praps = mapOf(
+            "pluginVersion" to project.versionString(),
+            "pluginAuthor" to providers.gradleProperty("projectAuthor").getOrElse("template"),
+            "pluginName" to providers.gradleProperty("projectName").getOrElse("template"),
+            "pluginDescription" to (project.description ?: "A template project")
+        )
+
+        filesMatching(setOf("paper-plugin.yml", "plugin.yml", "velocity-plugin.json")) {
+            expand(praps)
+        }
     }
 
     javadoc {

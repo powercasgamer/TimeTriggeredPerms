@@ -24,11 +24,10 @@
  */
 package dev.mizule.timetriggeredperms.paper
 
+import dev.mizule.timetriggeredperms.core.TTPPlugin
 import dev.mizule.timetriggeredperms.core.config.Config
 import dev.mizule.timetriggeredperms.paper.command.ReloadCommand
 import dev.mizule.timetriggeredperms.paper.listener.LuckPermsListener
-import net.luckperms.api.LuckPermsProvider
-import net.luckperms.api.event.node.NodeRemoveEvent
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.spongepowered.configurate.kotlin.extensions.get
@@ -36,7 +35,7 @@ import org.spongepowered.configurate.kotlin.objectMapperFactory
 import org.spongepowered.configurate.yaml.NodeStyle
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader
 
-class TTP : JavaPlugin() {
+class TTP : JavaPlugin(), TTPPlugin<JavaPlugin> {
 
     private val configPath = dataFolder.resolve("permissions.yml")
 
@@ -62,10 +61,16 @@ class TTP : JavaPlugin() {
             configNode.set(config) // update the backing node to add defaults
             configLoader.save(configNode)
         }
-        LuckPermsProvider.get().eventBus.subscribe(this, NodeRemoveEvent::class.java) {
-            LuckPermsListener(this).onExpire(it)
-        }
+        LuckPermsListener(this)
 
         Bukkit.getCommandMap().register("timetriggeredperms", ReloadCommand(this))
+    }
+
+    override fun config(): Config {
+        return config
+    }
+
+    override fun plugin(): JavaPlugin {
+        return this
     }
 }
