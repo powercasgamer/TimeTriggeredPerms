@@ -1,3 +1,5 @@
+@file:Suppress("ktlint")
+
 import net.kyori.indra.git.IndraGitExtension
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Project

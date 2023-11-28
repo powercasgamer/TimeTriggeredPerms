@@ -27,6 +27,7 @@ dependencies {
     runtimeDownloadOnlyApi(kotlin("reflect"))
     runtimeDownloadOnlyApi("org.spongepowered:configurate-yaml:4.2.0-SNAPSHOT")
     runtimeDownloadOnlyApi("org.spongepowered:configurate-extra-kotlin:4.2.0-SNAPSHOT")
+    implementation("org.bstats:bstats-bukkit:3.0.2")
 }
 
 applyJarMetadata("timetriggeredperms-paper")

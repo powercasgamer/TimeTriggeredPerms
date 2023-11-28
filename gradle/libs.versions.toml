@@ -16,6 +16,7 @@ hangar-publish = { module = "io.papermc:hangar-publish-plugin", version.ref = "h
 
 [plugins]
 gremlin-gradle = { id = "xyz.jpenilla.gremlin-gradle", version.ref = "gremlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [versions]
 indra = "3.1.3"
@@ -26,3 +27,4 @@ gremlin = "0.0.3"
 idea-gradle = "1.1.7"
 run-task = "2.2.2"
 hangar-publish = "0.1.0"
+spotless = "6.23.0"

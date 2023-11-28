@@ -1,5 +1,8 @@
+import com.diffplug.gradle.spotless.FormatExtension
+
 plugins {
     `kotlin-dsl`
+    alias(libs.plugins.spotless)
 }
 
 repositories {
@@ -34,5 +37,23 @@ kotlin {
                 jvmTarget = "17"
             }
         }
+    }
+}
+
+spotless {
+    fun FormatExtension.applyCommon() {
+        trimTrailingWhitespace()
+        endWithNewline()
+        encoding("UTF-8")
+        toggleOffOn()
+        target("*.gradle.kts")
+    }
+    kotlinGradle {
+        applyCommon()
+        ktlint("1.0.1")
+    }
+    kotlin {
+        applyCommon()
+        ktlint("1.0.1")
     }
 }

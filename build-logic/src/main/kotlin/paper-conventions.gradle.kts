@@ -25,11 +25,6 @@ tasks {
     named("clean", Delete::class) {
         delete(project.projectDir.resolve("run"))
     }
-
-
-    shadowJar {
-        relocate("xyz.jpenilla.gremlin", "dev.mizule.timetriggeredperms.lib.xyz.jpenilla.gremlin")
-    }
 }
 
 hangarPublish {

@@ -1,7 +1,8 @@
 import com.diffplug.gradle.spotless.FormatExtension
 import com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer
 import net.kyori.indra.licenser.spotless.HeaderFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 plugins {
     id("base-conventions")
@@ -90,6 +91,9 @@ tasks {
         archiveClassifier.set("")
         mergeServiceFiles()
         transform(Log4j2PluginsCacheFileTransformer::class.java)
+
+            relocate("xyz.jpenilla.gremlin", "dev.mizule.timetriggeredperms.lib.xyz.jpenilla.gremlin")
+            relocate("org.bstats", "dev.mizule.timetriggeredperms.lib.org.bstats")
     }
 
     withType<JavaCompile>().configureEach {
