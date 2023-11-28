@@ -2,22 +2,21 @@ import io.papermc.hangarpublishplugin.model.Platforms
 
 plugins {
     id("common-conventions")
-    id("xyz.jpenilla.run-paper")
+    id("xyz.jpenilla.run-velocity")
     id("xyz.jpenilla.gremlin-gradle")
     id("io.papermc.hangar-publish-plugin")
 }
 
 tasks {
-    runServer {
-        minecraftVersion("1.20.2")
+    runVelocity {
+        velocityVersion("3.2.0-SNAPSHOT")
 
-        jvmArguments.add("-Dcom.mojang.eula.agree=true")
         systemProperty("terminal.jline", false)
         systemProperty("terminal.ansi", true)
-        args("-p", "25519")
+        args("-p", "25520")
 
         downloadPlugins {
-            url("https://download.luckperms.net/1521/bukkit/loader/LuckPerms-Bukkit-5.4.108.jar")
+            url("https://download.luckperms.net/1521/velocity/LuckPerms-Velocity-5.4.108.jar")
         }
     }
 
@@ -32,9 +31,9 @@ hangarPublish {
         id.set("TimeTriggeredPerms")
         channel.set(if (rootProject.versionString().endsWith("-SNAPSHOT")) "Beta" else "Release")
         platforms {
-            register(Platforms.PAPER) {
+            register(Platforms.VELOCITY) {
                 jar.set(tasks.shadowJar.flatMap { it.archiveFile })
-                platformVersions.set(listOf("1.20", "1.19"))
+                platformVersions.set(listOf("3.0"))
                 dependencies {
                     url("LuckPerms", "https://luckperms.net") {
                         required.set(true)

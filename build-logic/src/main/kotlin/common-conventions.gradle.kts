@@ -14,7 +14,7 @@ plugins {
     id("java-library")
 }
 
-// val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
+val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
 
 extensions.getByType(BasePluginExtension::class.java).archivesName.set(project.nameString(true))
 
@@ -51,10 +51,12 @@ spotless {
     kotlinGradle {
         applyCommon()
         ktlint("0.50.0")
+//        ktlint(libs.versions.ktlint.get())
     }
     kotlin {
         applyCommon()
         ktlint("0.50.0")
+//        ktlint(libs.versions.ktlint.get())
     }
 }
 
@@ -108,7 +110,7 @@ tasks {
         filteringCharset = "UTF-8"
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
-        val praps =
+        val props =
             mapOf(
                 "pluginVersion" to project.versionString(),
                 "pluginAuthor" to providers.gradleProperty("projectAuthor").getOrElse("template"),
@@ -117,7 +119,7 @@ tasks {
             )
 
         filesMatching(setOf("paper-plugin.yml", "plugin.yml", "velocity-plugin.json")) {
-            expand(praps)
+            expand(props)
         }
     }
 

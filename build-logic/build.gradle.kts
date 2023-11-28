@@ -50,10 +50,10 @@ spotless {
     }
     kotlinGradle {
         applyCommon()
-        ktlint("1.0.1")
+        ktlint(libs.versions.ktlint.get())
     }
     kotlin {
         applyCommon()
-        ktlint("1.0.1")
+        ktlint(libs.versions.ktlint.get())
     }
 }
