@@ -14,7 +14,7 @@ plugins {
     id("java-library")
 }
 
-//val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
+// val libs = extensions.getByType(org.gradle.accessors.dm.LibrariesForLibs::class)
 
 extensions.getByType(BasePluginExtension::class.java).archivesName.set(project.nameString(true))
 
@@ -62,9 +62,10 @@ indraSpotlessLicenser {
     headerFormat(HeaderFormat.starSlash())
     licenseHeaderFile(rootProject.projectDir.resolve("HEADER"))
 
-    val currentYear = Calendar.getInstance().apply {
-        time = Date()
-    }.get(Calendar.YEAR)
+    val currentYear =
+        Calendar.getInstance().apply {
+            time = Date()
+        }.get(Calendar.YEAR)
     val createdYear = providers.gradleProperty("createdYear").map { it.toInt() }.getOrElse(currentYear)
     val year = if (createdYear == currentYear) createdYear.toString() else "$createdYear-$currentYear"
 
@@ -72,7 +73,6 @@ indraSpotlessLicenser {
     property("year", year)
     property("description", project.description ?: "A template project")
     property("author", providers.gradleProperty("projectAuthor").getOrElse("template"))
-
 }
 
 tasks {
@@ -92,8 +92,8 @@ tasks {
         mergeServiceFiles()
         transform(Log4j2PluginsCacheFileTransformer::class.java)
 
-            relocate("xyz.jpenilla.gremlin", "dev.mizule.timetriggeredperms.lib.xyz.jpenilla.gremlin")
-            relocate("org.bstats", "dev.mizule.timetriggeredperms.lib.org.bstats")
+        relocate("xyz.jpenilla.gremlin", "dev.mizule.timetriggeredperms.lib.xyz.jpenilla.gremlin")
+        relocate("org.bstats", "dev.mizule.timetriggeredperms.lib.org.bstats")
     }
 
     withType<JavaCompile>().configureEach {
@@ -108,12 +108,13 @@ tasks {
         filteringCharset = "UTF-8"
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
-        val praps = mapOf(
-            "pluginVersion" to project.versionString(),
-            "pluginAuthor" to providers.gradleProperty("projectAuthor").getOrElse("template"),
-            "pluginName" to providers.gradleProperty("projectName").getOrElse("template"),
-            "pluginDescription" to (project.description ?: "A template project")
-        )
+        val praps =
+            mapOf(
+                "pluginVersion" to project.versionString(),
+                "pluginAuthor" to providers.gradleProperty("projectAuthor").getOrElse("template"),
+                "pluginName" to providers.gradleProperty("projectName").getOrElse("template"),
+                "pluginDescription" to (project.description ?: "A template project"),
+            )
 
         filesMatching(setOf("paper-plugin.yml", "plugin.yml", "velocity-plugin.json")) {
             expand(praps)

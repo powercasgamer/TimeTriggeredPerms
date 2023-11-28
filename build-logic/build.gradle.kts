@@ -46,7 +46,7 @@ spotless {
         endWithNewline()
         encoding("UTF-8")
         toggleOffOn()
-        target("*.gradle.kts")
+        target("**/*.gradle.kts")
     }
     kotlinGradle {
         applyCommon()
