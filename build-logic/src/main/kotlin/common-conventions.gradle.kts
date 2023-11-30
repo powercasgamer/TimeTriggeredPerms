@@ -98,6 +98,10 @@ tasks {
         relocate("org.bstats", "dev.mizule.timetriggeredperms.lib.org.bstats")
     }
 
+    create("format") {
+        
+    }
+
     withType<JavaCompile>().configureEach {
         options.isFork = true
         options.isIncremental = true
