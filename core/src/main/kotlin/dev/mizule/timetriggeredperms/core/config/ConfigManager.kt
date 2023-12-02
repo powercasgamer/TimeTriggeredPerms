@@ -24,19 +24,17 @@
  */
 package dev.mizule.timetriggeredperms.core.config
 
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader
 import org.spongepowered.configurate.kotlin.extensions.get
 import org.spongepowered.configurate.kotlin.objectMapperFactory
-import org.spongepowered.configurate.yaml.NodeStyle
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader
 import java.nio.file.Path
 import kotlin.io.path.exists
 
 object ConfigManager {
 
     fun loadConfig(path: Path): Config {
-        val configLoader = YamlConfigurationLoader.builder()
+        val configLoader = HoconConfigurationLoader.builder()
             .path(path)
-            .nodeStyle(NodeStyle.BLOCK)
             .indent(2)
             .defaultOptions { options ->
                 options.shouldCopyDefaults(true)
@@ -45,8 +43,8 @@ object ConfigManager {
                 }
             }
             .build()
-        var configNode = configLoader.load()
-        var config = requireNotNull(configNode.get<Config>()) {
+        val configNode = configLoader.load()
+        val config = requireNotNull(configNode.get<Config>()) {
             "Could not read configuration"
         }
 

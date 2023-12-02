@@ -11,7 +11,7 @@ dependencies {
     implementation(libs.gremlin.runtime)
     runtimeDownloadOnlyApi(kotlin("stdlib"))
     runtimeDownloadOnlyApi(kotlin("reflect"))
-    runtimeDownloadOnlyApi("org.spongepowered:configurate-yaml:4.2.0-SNAPSHOT")
+    runtimeDownloadOnlyApi("org.spongepowered:configurate-hocon:4.2.0-SNAPSHOT")
     runtimeDownloadOnlyApi("org.spongepowered:configurate-extra-kotlin:4.2.0-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit:3.0.2")
 }

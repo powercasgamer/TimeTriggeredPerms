@@ -39,7 +39,7 @@ class TTP @Inject constructor(
     private val dataPath: Path,
 ) : TTPPlugin<PluginLoader> {
 
-    private val configPath = dataPath.resolve("permissions.yml")
+    private val configPath = dataPath.resolve("permissions.conf")
     private lateinit var config: Config
 
     fun enable() {

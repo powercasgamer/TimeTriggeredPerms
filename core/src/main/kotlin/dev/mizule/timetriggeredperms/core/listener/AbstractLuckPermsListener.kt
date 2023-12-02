@@ -25,10 +25,11 @@
 package dev.mizule.timetriggeredperms.core.listener
 
 import dev.mizule.timetriggeredperms.core.TTPPlugin
+import dev.mizule.timetriggeredperms.core.config.PermissionThing
 import net.luckperms.api.LuckPermsProvider
 import net.luckperms.api.event.node.NodeRemoveEvent
 
-abstract class AbstractLuckPermsListener(plugin: TTPPlugin<*>) {
+abstract class AbstractLuckPermsListener(private val plugin: TTPPlugin<*>) {
 
     init {
         LuckPermsProvider.get().eventBus.subscribe(plugin, NodeRemoveEvent::class.java) {
@@ -43,4 +44,8 @@ abstract class AbstractLuckPermsListener(plugin: TTPPlugin<*>) {
     }
 
     abstract fun onExpire(event: NodeRemoveEvent)
+
+    fun nodeFromConfig(perm: String): PermissionThing? {
+        return plugin.config().permissions.values.firstOrNull { it.permission == perm }
+    }
 }

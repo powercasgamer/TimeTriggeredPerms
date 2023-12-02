@@ -9,7 +9,7 @@ dependencies {
     compileOnly(kotlin("stdlib"))
     compileOnly(kotlin("reflect"))
     compileOnlyApi("net.luckperms:api:5.4")
-    compileOnly("org.spongepowered:configurate-yaml:4.2.0-SNAPSHOT")
+    compileOnly("org.spongepowered:configurate-hocon:4.2.0-SNAPSHOT")
     compileOnly("org.spongepowered:configurate-extra-kotlin:4.2.0-SNAPSHOT")
 }
 

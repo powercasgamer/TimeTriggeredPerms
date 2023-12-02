@@ -35,7 +35,7 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class TTP : JavaPlugin(), TTPPlugin<JavaPlugin> {
 
-    private val configPath = dataFolder.resolve("permissions.yml").toPath()
+    private val configPath = dataFolder.resolve("permissions.conf").toPath()
     private val pluginId = 20404
 
     private lateinit var config: Config

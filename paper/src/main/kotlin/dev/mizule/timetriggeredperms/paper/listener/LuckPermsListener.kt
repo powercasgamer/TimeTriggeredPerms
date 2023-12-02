@@ -25,7 +25,6 @@
 package dev.mizule.timetriggeredperms.paper.listener
 
 import dev.mizule.timetriggeredperms.core.TTPPlugin
-import dev.mizule.timetriggeredperms.core.config.PermissionThing
 import dev.mizule.timetriggeredperms.core.listener.AbstractLuckPermsListener
 import net.luckperms.api.event.node.NodeRemoveEvent
 import net.luckperms.api.model.user.User
@@ -39,7 +38,7 @@ class LuckPermsListener(private val plugin: TTPPlugin<JavaPlugin>) : AbstractLuc
     override fun onExpire(event: NodeRemoveEvent) {
         val permissionNode = event.node as PermissionNode
 
-        val configNode = nodeConfig(permissionNode.permission) ?: return
+        val configNode = nodeFromConfig(permissionNode.permission) ?: return
 
         val isUser = event.isUser
 
@@ -55,10 +54,6 @@ class LuckPermsListener(private val plugin: TTPPlugin<JavaPlugin>) : AbstractLuc
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formattedCommand)
             }
         }
-    }
-
-    fun nodeConfig(perm: String): PermissionThing? {
-        return plugin.config().permissions.values.firstOrNull { it.permission == perm }
     }
 
     fun sync(task: (BukkitTask) -> Unit) {

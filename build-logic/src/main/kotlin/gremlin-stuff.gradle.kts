@@ -15,10 +15,8 @@ configurations {
     runtimeDownload.extendsFrom(runtimeDownloadApi)
 }
 
-
 dependencies {
     implementation(libs.gremlin.runtime)
-
 }
 
 tasks.writeDependencies {
