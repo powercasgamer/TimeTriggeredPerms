@@ -26,6 +26,7 @@ package dev.mizule.timetriggeredperms.paper
 
 import dev.mizule.timetriggeredperms.core.TTPPlugin
 import dev.mizule.timetriggeredperms.core.config.Config
+import dev.mizule.timetriggeredperms.core.config.ConfigManager
 import dev.mizule.timetriggeredperms.paper.command.ReloadCommand
 import dev.mizule.timetriggeredperms.paper.listener.LuckPermsListener
 import org.bstats.bukkit.Metrics
@@ -38,31 +39,13 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader
 
 class TTP : JavaPlugin(), TTPPlugin<JavaPlugin> {
 
-    private val configPath = dataFolder.resolve("permissions.yml")
+    private val configPath = dataFolder.resolve("permissions.yml").toPath()
     private val pluginId = 20404
 
-    val configLoader = YamlConfigurationLoader.builder()
-        .file(configPath)
-        .nodeStyle(NodeStyle.BLOCK)
-        .indent(2)
-        .defaultOptions { options ->
-            options.shouldCopyDefaults(true)
-            options.serializers { builder ->
-                builder.registerAnnotatedObjects(objectMapperFactory())
-            }
-        }
-        .build()
-
-    var configNode = configLoader.load()
-    var config = requireNotNull(configNode.get<Config>()) {
-        "Could not read configuration"
-    }
+    private lateinit var config: Config
 
     override fun onEnable() {
-        if (!configPath.exists()) {
-            configNode.set(config) // update the backing node to add defaults
-            configLoader.save(configNode)
-        }
+        this.config = ConfigManager.loadConfig(configPath)
         Metrics(this, pluginId)
         LuckPermsListener(this)
 
