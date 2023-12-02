@@ -44,7 +44,6 @@ public class PluginLoader implements TTPPlugin<PluginLoader> {
         this.server = proxy;
         this.metricsFactory = metricsFactory;
         instance = this;
-
     }
 
     @Subscribe(order = PostOrder.LATE)
