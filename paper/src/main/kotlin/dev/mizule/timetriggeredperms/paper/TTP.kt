@@ -33,9 +33,6 @@ import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.spongepowered.configurate.kotlin.extensions.get
-import org.spongepowered.configurate.kotlin.objectMapperFactory
-import org.spongepowered.configurate.yaml.NodeStyle
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader
 
 class TTP : JavaPlugin(), TTPPlugin<JavaPlugin> {
 
