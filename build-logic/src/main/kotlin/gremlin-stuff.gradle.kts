@@ -24,8 +24,6 @@ tasks.writeDependencies {
     repos.add("https://repo.papermc.io/repository/maven-public/")
     repos.add("https://repo.maven.apache.org/maven2/")
     repos.add("https://maven.mizule.dev/")
-    repos.add("https://maven.reposilite.com/snapshots/")
-    repos.add("https://maven.reposilite.com/releases/")
 }
 
 gremlin {

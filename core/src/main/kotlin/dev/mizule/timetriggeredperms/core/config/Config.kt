@@ -36,7 +36,7 @@ data class Config(
         "example" to PermissionThing(
             "test.permission",
             listOf("say example"),
-            Target.USER
+            Target.USER,
         ),
     ),
 
@@ -59,11 +59,11 @@ data class PermissionThing(
 
     @Comment(
         "Available options are:\n" +
-                "USER - If this should be called for Users only\n" +
-                "GROUP - If this should be called for Groups only\n" +
-                "ALL - If this should be called for Users and Groups"
+            "USER - If this should be called for Users only\n" +
+            "GROUP - If this should be called for Groups only\n" +
+            "ALL - If this should be called for Users and Groups",
     )
-    val target: Target
+    val target: Target,
 )
 
 enum class Target {
