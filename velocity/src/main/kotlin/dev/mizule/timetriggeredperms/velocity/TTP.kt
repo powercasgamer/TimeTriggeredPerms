@@ -1,30 +1,42 @@
+/*
+ * This file is part of TimeTriggeredPerms, licensed under the MIT License.
+ *
+ * Copyright (c) 2023 powercas_gamer
+ * Copyright (c) 2023 contributors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package dev.mizule.timetriggeredperms.velocity
 
 import com.google.inject.Inject
-import com.velocitypowered.api.event.PostOrder
-import com.velocitypowered.api.event.Subscribe
-import com.velocitypowered.api.event.proxy.ProxyInitializeEvent
-import com.velocitypowered.api.plugin.Dependency
-import com.velocitypowered.api.plugin.Plugin
-import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
 import dev.mizule.timetriggeredperms.core.TTPPlugin
 import dev.mizule.timetriggeredperms.core.config.Config
 import dev.mizule.timetriggeredperms.core.config.ConfigManager
 import dev.mizule.timetriggeredperms.velocity.listener.LuckPermsListener
-import org.bstats.velocity.Metrics
 import org.slf4j.Logger
-import xyz.jpenilla.gremlin.runtime.DependencyCache
-import xyz.jpenilla.gremlin.runtime.DependencyResolver
-import xyz.jpenilla.gremlin.runtime.DependencySet
-import xyz.jpenilla.gremlin.runtime.platformsupport.VelocityClasspathAppender
 import java.nio.file.Path
 
-
 class TTP @Inject constructor(
-    logger: Logger,
-    val proxy: ProxyServer,
-    val dataPath: Path
+    private val logger: Logger,
+    private val proxy: ProxyServer,
+    private val dataPath: Path,
 ) : TTPPlugin<PluginLoader> {
 
     private val configPath = dataPath.resolve("permissions.yml")
@@ -40,6 +52,6 @@ class TTP @Inject constructor(
     }
 
     override fun plugin(): PluginLoader {
-        return PluginLoader.instance;
+        return PluginLoader.instance
     }
 }

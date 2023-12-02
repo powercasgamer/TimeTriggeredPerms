@@ -99,7 +99,7 @@ tasks {
     }
 
     create("format") {
-        
+        dependsOn("spotlessApply")
     }
 
     withType<JavaCompile>().configureEach {

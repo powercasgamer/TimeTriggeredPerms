@@ -44,15 +44,15 @@ class LuckPermsListener(private val plugin: TTPPlugin<PluginLoader>) : AbstractL
         val configNode = nodeConfig(permissionNode.permission)
         val isUser = event.isUser
 
-            configNode.commands.forEach { command ->
-                val name = event.target.friendlyName
-                val uuid = if (isUser) (event.target as User).uniqueId.toString() else ""
-                val formattedCommand = command
-                    .replace("%name%", name)
-                    .replace("%uuid%", uuid)
-                    .replace("%permission%", permissionNode.permission)
+        configNode.commands.forEach { command ->
+            val name = event.target.friendlyName
+            val uuid = if (isUser) (event.target as User).uniqueId.toString() else ""
+            val formattedCommand = command
+                .replace("%name%", name)
+                .replace("%uuid%", uuid)
+                .replace("%permission%", permissionNode.permission)
 
-                proxy.commandManager.executeAsync(proxy.consoleCommandSource, formattedCommand)
+            proxy.commandManager.executeAsync(proxy.consoleCommandSource, formattedCommand)
         }
     }
 
