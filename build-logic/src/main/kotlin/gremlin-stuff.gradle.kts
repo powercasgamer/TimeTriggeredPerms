@@ -1,17 +1,20 @@
+import org.jetbrains.kotlin.gradle.utils.extendsFrom
+
 plugins {
     id("common-conventions")
     id("xyz.jpenilla.gremlin-gradle")
 }
 
-val runtimeDownloadOnlyApi by configurations.registering {
-    extendsFrom(configurations.compileOnlyApi.get())
-    extendsFrom(configurations.runtimeDownload.get())
+val runtimeDownloadOnlyApi by configurations.registering
+val runtimeDownloadApi by configurations.registering
+
+configurations {
+    compileOnlyApi.extendsFrom(runtimeDownloadOnlyApi)
+    runtimeDownload.extendsFrom(runtimeDownloadOnlyApi)
+    api.extendsFrom(runtimeDownloadApi)
+    runtimeDownload.extendsFrom(runtimeDownloadApi)
 }
 
-val runtimeDownloadApi by configurations.registering {
-    extendsFrom(configurations.api.get())
-    extendsFrom(configurations.runtimeDownload.get())
-}
 
 dependencies {
     implementation(libs.gremlin.runtime)

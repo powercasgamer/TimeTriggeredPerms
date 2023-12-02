@@ -54,4 +54,8 @@ class TTP @Inject constructor(
     override fun plugin(): PluginLoader {
         return PluginLoader.instance
     }
+
+    override fun reloadConfiguration() {
+        this.config = ConfigManager.loadConfig(configPath)
+    }
 }

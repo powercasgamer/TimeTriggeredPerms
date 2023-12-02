@@ -72,4 +72,8 @@ public class PluginLoader implements TTPPlugin<PluginLoader> {
         return this;
     }
 
+    @Override
+    public void reloadConfiguration() {
+        this.ttp.reloadConfiguration();
+    }
 }

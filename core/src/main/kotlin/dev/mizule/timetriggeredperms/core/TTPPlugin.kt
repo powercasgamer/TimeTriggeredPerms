@@ -30,5 +30,7 @@ interface TTPPlugin<T> {
 
     fun config(): Config
 
+    fun reloadConfiguration()
+
     fun plugin(): T
 }

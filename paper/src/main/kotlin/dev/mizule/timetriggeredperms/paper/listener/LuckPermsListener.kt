@@ -39,7 +39,8 @@ class LuckPermsListener(private val plugin: TTPPlugin<JavaPlugin>) : AbstractLuc
     override fun onExpire(event: NodeRemoveEvent) {
         val permissionNode = event.node as PermissionNode
 
-        val configNode = nodeConfig(permissionNode.permission)
+        val configNode = nodeConfig(permissionNode.permission) ?: return
+
         val isUser = event.isUser
 
         sync {
@@ -56,8 +57,8 @@ class LuckPermsListener(private val plugin: TTPPlugin<JavaPlugin>) : AbstractLuc
         }
     }
 
-    fun nodeConfig(perm: String): PermissionThing {
-        return plugin.config().permissions.values.first { it.permission == perm }
+    fun nodeConfig(perm: String): PermissionThing? {
+        return plugin.config().permissions.values.firstOrNull { it.permission == perm }
     }
 
     fun sync(task: (BukkitTask) -> Unit) {

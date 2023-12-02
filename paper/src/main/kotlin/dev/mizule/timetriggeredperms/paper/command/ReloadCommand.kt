@@ -24,7 +24,6 @@
  */
 package dev.mizule.timetriggeredperms.paper.command
 
-import dev.mizule.timetriggeredperms.core.config.Config
 import dev.mizule.timetriggeredperms.paper.TTP
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -37,11 +36,7 @@ class ReloadCommand(val plugin: TTP) : Command("ttpreload") {
     }
 
     override fun execute(sender: CommandSender, commandLabel: String, args: Array<out String>?): Boolean {
-        var configNode = plugin.configLoader.load()
-        var config = requireNotNull(configNode.get<Config>()) {
-            "Could not read configuration"
-        }
-        plugin.config = config
+        plugin.reloadConfiguration()
 
         sender.sendMessage("reloaded")
 

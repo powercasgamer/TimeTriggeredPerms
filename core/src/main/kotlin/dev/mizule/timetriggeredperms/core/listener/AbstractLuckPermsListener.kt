@@ -38,7 +38,7 @@ abstract class AbstractLuckPermsListener(plugin: TTPPlugin<*>) {
 
     private fun onExpire0(event: NodeRemoveEvent) {
         if (event.node.hasExpired()) {
-            onExpire0(event)
+            onExpire(event)
         }
     }
 

@@ -32,7 +32,6 @@ import dev.mizule.timetriggeredperms.paper.listener.LuckPermsListener
 import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
-import org.spongepowered.configurate.kotlin.extensions.get
 
 class TTP : JavaPlugin(), TTPPlugin<JavaPlugin> {
 
@@ -51,6 +50,10 @@ class TTP : JavaPlugin(), TTPPlugin<JavaPlugin> {
 
     override fun config(): Config {
         return config
+    }
+
+    override fun reloadConfiguration() {
+        this.config = ConfigManager.loadConfig(configPath)
     }
 
     override fun plugin(): JavaPlugin {
