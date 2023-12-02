@@ -32,7 +32,13 @@ import org.spongepowered.configurate.objectmapping.meta.Setting
 data class Config(
 
     @Setting(nodeFromParent = true)
-    val permissions: Map<String, PermissionThing> = mapOf("example" to PermissionThing("test.permission", listOf("say example"))),
+    val permissions: Map<String, PermissionThing> = mapOf(
+        "example" to PermissionThing(
+            "test.permission",
+            listOf("say example"),
+            Target.USER,
+        ),
+    ),
 
 )
 
@@ -50,4 +56,18 @@ data class PermissionThing(
             "%permission% - the permission that got removed",
     )
     val commands: List<String>,
+
+    @Comment(
+        "Available options are:\n" +
+            "USER - If this should be called for Users only\n" +
+            "GROUP - If this should be called for Groups only\n" +
+            "ALL - If this should be called for Users and Groups",
+    )
+    val target: Target,
 )
+
+enum class Target {
+    USER,
+    GROUP,
+    ALL,
+}

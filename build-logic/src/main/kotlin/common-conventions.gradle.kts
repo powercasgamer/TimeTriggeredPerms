@@ -98,6 +98,10 @@ tasks {
         relocate("org.bstats", "dev.mizule.timetriggeredperms.lib.org.bstats")
     }
 
+    create("format") {
+        dependsOn("spotlessApply")
+    }
+
     withType<JavaCompile>().configureEach {
         options.isFork = true
         options.isIncremental = true

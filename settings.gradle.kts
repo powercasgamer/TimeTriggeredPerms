@@ -12,6 +12,7 @@ rootProject.name = "TimeTriggeredPerms"
 
 sequenceOf(
     "paper",
+    "velocity",
     "core"
 ).forEach {
     include("timetriggeredperms-$it")

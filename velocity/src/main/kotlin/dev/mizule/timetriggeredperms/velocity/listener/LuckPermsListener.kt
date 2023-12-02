@@ -22,41 +22,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.mizule.timetriggeredperms.paper.listener
+package dev.mizule.timetriggeredperms.velocity.listener
 
+import com.google.inject.Inject
+import com.velocitypowered.api.proxy.ProxyServer
 import dev.mizule.timetriggeredperms.core.TTPPlugin
+import dev.mizule.timetriggeredperms.core.config.PermissionThing
 import dev.mizule.timetriggeredperms.core.listener.AbstractLuckPermsListener
+import dev.mizule.timetriggeredperms.velocity.PluginLoader
 import net.luckperms.api.event.node.NodeRemoveEvent
 import net.luckperms.api.model.user.User
 import net.luckperms.api.node.types.PermissionNode
-import org.bukkit.Bukkit
-import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.scheduler.BukkitTask
 
-class LuckPermsListener(private val plugin: TTPPlugin<JavaPlugin>) : AbstractLuckPermsListener(plugin) {
+class LuckPermsListener(private val plugin: TTPPlugin<PluginLoader>) : AbstractLuckPermsListener(plugin) {
+
+    @Inject lateinit var proxy: ProxyServer
 
     override fun onExpire(event: NodeRemoveEvent) {
         val permissionNode = event.node as PermissionNode
 
-        val configNode = nodeFromConfig(permissionNode.permission) ?: return
-
+        val configNode = nodeConfig(permissionNode.permission)
         val isUser = event.isUser
 
-        sync {
-            configNode.commands.forEach { command ->
-                val name = event.target.friendlyName
-                val uuid = if (isUser) (event.target as User).uniqueId.toString() else ""
-                val formattedCommand = command
-                    .replace("%name%", name)
-                    .replace("%uuid%", uuid)
-                    .replace("%permission%", permissionNode.permission)
+        configNode.commands.forEach { command ->
+            val name = event.target.friendlyName
+            val uuid = if (isUser) (event.target as User).uniqueId.toString() else ""
+            val formattedCommand = command
+                .replace("%name%", name)
+                .replace("%uuid%", uuid)
+                .replace("%permission%", permissionNode.permission)
 
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), formattedCommand)
-            }
+            proxy.commandManager.executeAsync(proxy.consoleCommandSource, formattedCommand)
         }
     }
 
-    fun sync(task: (BukkitTask) -> Unit) {
-        Bukkit.getScheduler().runTask(plugin.plugin(), task)
+    fun nodeConfig(perm: String): PermissionThing {
+        return plugin.config().permissions.values.first { it.permission == perm }
     }
 }

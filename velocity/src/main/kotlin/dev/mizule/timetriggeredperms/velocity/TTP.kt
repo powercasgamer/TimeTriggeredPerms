@@ -22,15 +22,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.mizule.timetriggeredperms.core
+package dev.mizule.timetriggeredperms.velocity
 
+import com.google.inject.Inject
+import com.velocitypowered.api.proxy.ProxyServer
+import dev.mizule.timetriggeredperms.core.TTPPlugin
 import dev.mizule.timetriggeredperms.core.config.Config
+import dev.mizule.timetriggeredperms.core.config.ConfigManager
+import dev.mizule.timetriggeredperms.velocity.listener.LuckPermsListener
+import org.slf4j.Logger
+import java.nio.file.Path
 
-interface TTPPlugin<T> {
+class TTP @Inject constructor(
+    private val logger: Logger,
+    private val proxy: ProxyServer,
+    private val dataPath: Path,
+) : TTPPlugin<PluginLoader> {
 
-    fun config(): Config
+    private val configPath = dataPath.resolve("permissions.conf")
+    private lateinit var config: Config
 
-    fun reloadConfiguration()
+    fun enable() {
+        this.config = ConfigManager.loadConfig(configPath)
+        LuckPermsListener(PluginLoader.instance)
+    }
 
-    fun plugin(): T
+    override fun config(): Config {
+        return config
+    }
+
+    override fun plugin(): PluginLoader {
+        return PluginLoader.instance
+    }
+
+    override fun reloadConfiguration() {
+        this.config = ConfigManager.loadConfig(configPath)
+    }
 }

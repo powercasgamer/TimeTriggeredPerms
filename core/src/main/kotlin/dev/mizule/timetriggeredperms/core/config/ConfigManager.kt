@@ -22,15 +22,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.mizule.timetriggeredperms.core
+package dev.mizule.timetriggeredperms.core.config
 
-import dev.mizule.timetriggeredperms.core.config.Config
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader
+import org.spongepowered.configurate.kotlin.extensions.get
+import org.spongepowered.configurate.kotlin.objectMapperFactory
+import java.nio.file.Path
+import kotlin.io.path.exists
 
-interface TTPPlugin<T> {
+object ConfigManager {
 
-    fun config(): Config
+    fun loadConfig(path: Path): Config {
+        val configLoader = HoconConfigurationLoader.builder()
+            .path(path)
+            .indent(2)
+            .defaultOptions { options ->
+                options.shouldCopyDefaults(true)
+                options.serializers { builder ->
+                    builder.registerAnnotatedObjects(objectMapperFactory())
+                }
+            }
+            .build()
+        val configNode = configLoader.load()
+        val config = requireNotNull(configNode.get<Config>()) {
+            "Could not read configuration"
+        }
 
-    fun reloadConfiguration()
+        if (!path.exists()) {
+            configNode.set(config) // update the backing node to add defaults
+            configLoader.save(configNode)
+        }
 
-    fun plugin(): T
+        return config
+    }
 }
