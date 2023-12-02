@@ -22,19 +22,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.mizule.timetriggeredperms.paper.listener
+package dev.mizule.timetriggeredperms.velocity.listener
 
 import com.google.inject.Inject
 import com.velocitypowered.api.proxy.ProxyServer
 import dev.mizule.timetriggeredperms.core.TTPPlugin
 import dev.mizule.timetriggeredperms.core.config.PermissionThing
 import dev.mizule.timetriggeredperms.core.listener.AbstractLuckPermsListener
-import dev.mizule.timetriggeredperms.velocity.TTP
+import dev.mizule.timetriggeredperms.velocity.PluginLoader
 import net.luckperms.api.event.node.NodeRemoveEvent
 import net.luckperms.api.model.user.User
 import net.luckperms.api.node.types.PermissionNode
 
-class LuckPermsListener(private val plugin: TTPPlugin<TTP>) : AbstractLuckPermsListener(plugin) {
+class LuckPermsListener(private val plugin: TTPPlugin<PluginLoader>) : AbstractLuckPermsListener(plugin) {
 
     @Inject lateinit var proxy: ProxyServer
 
